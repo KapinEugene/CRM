@@ -15,7 +15,6 @@
             <div class="navbar-collapse" id="navbarCollapse">
                 <form id="search-form" class="d-flex" role="search">
                     <input id="search-input" class="form-control me-2" type="search" placeholder="Ввод..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
             </div>
         </div>
@@ -25,9 +24,7 @@
     <div class="container">
         <div class="row">
             <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить
-                    клиента
-                </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить клиента</button>
             </div>
         </div>
 
@@ -62,7 +59,6 @@
             </table>
         </div>
     </div>
-
 </div>
 
 <div class="modal fade modal-dialog modal-dialog-centered" id="addModal" tabindex="-1" aria-hidden="true">
@@ -89,8 +85,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Создать</button>
+                <button id="cancel-create-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button id="confirm-create-button" type="button" class="btn btn-primary">Создать</button>
             </div>
         </div>
     </div>

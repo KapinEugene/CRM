@@ -61,6 +61,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Кнопка "Создать" в модальном окне создания клиента
+    document.getElementById('confirm-create-button').addEventListener('click', async () => {
+        const client = {
+            'surname': document.getElementById('sName').value,
+            'name': document.getElementById('fName').value,
+            'lastName': document.getElementById('pName').value,
+            'contacts': []
+        }
+        const errors = await BackendAPI.create(client);
+        if (errors.length) {
+            errors.forEach((err) => {
+                switch (err.field) {
+                    case 'name':
+                        document.getElementById('fName').classList.add('is-invalid');
+                        break;
+                    case 'surname':
+                        document.getElementById('sName').classList.add('is-invalid');
+                        break;
+                }
+            });
+        }
+        else {
+            document.getElementById('fName').classList.remove('is-invalid');
+            document.getElementById('pName').classList.remove('is-invalid');
+            document.getElementById('sName').classList.remove('is-invalid');
+            document.getElementById('fName').value = '';
+            document.getElementById('pName').value = '';
+            document.getElementById('sName').value = '';
+            document.getElementById('cancel-create-button').click();
+            await updateClientsTable(document.getElementById('search-input').value);
+        }
+    });
 });
 
 function drawingTableOfClients(clientsList) {
@@ -76,7 +109,7 @@ function drawingTableOfClients(clientsList) {
             switch (key) {
                 case 0:
                     tbodyTd.classList.add('tbody_id', 'td_text');
-                    tbodyTd.textContent = Math.trunc(clientsList[i].id / 10000000);
+                    tbodyTd.textContent = clientsList[i].id.substr(-6);
                     break;
                 case 1:
                     tbodyTd.classList.add('td_full-name');

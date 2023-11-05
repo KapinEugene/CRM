@@ -18,7 +18,7 @@ module.exports = class CreateClientController extends DefaultAPIController
 		if (validationErrors.length) {
 			// Есть ошибки валидации
 			response.statusCode = 422;
-			response.write(JSON.stringify({ validationErrors: errors }));
+			response.write(JSON.stringify({ validationErrors }));
 		}
 		else {
 			// Данные проверены - можно создавать клиента

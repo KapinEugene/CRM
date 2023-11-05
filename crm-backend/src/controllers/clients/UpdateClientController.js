@@ -22,7 +22,7 @@ module.exports = class UpdateClientController extends DefaultAPIController
 				response.write(JSON.stringify({ validationErrors }));
 			}
 			else {
-				// Данные проверены - можно создавать клиента
+				// Данные проверены - можно обновлять данные клиента
 				clientModel.update(clientID, clientCard);
 			}
 		}
