@@ -39,7 +39,7 @@ function setTooltips(query, options) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    updateClientsTable();
+    updateClientsTable(document.getElementById('search-input').value);
 
     function search(e) {
         if (this.timeoutID) {
@@ -48,9 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.timeoutID = setTimeout(updateClientsTable, searchDelay, e.currentTarget.value);
     }
 
-    document.getElementById('search-input').addEventListener('input', function(e) {
-        search(e);
-    });
+    document.getElementById('search-input').addEventListener('input', e => search(e));
+
     // Кнопка удаление клиента в модальном окне
     document.getElementById('confirm-delete-button').addEventListener('click', async () => {
         document.getElementById('cancel-delete-button').click();
@@ -72,6 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 'contacts': []
             }
             const errors = await BackendAPI.update(id, client);
+            document.getElementById('fNameUpd').classList.remove('is-invalid');
+            document.getElementById('pNameUpd').classList.remove('is-invalid');
+            document.getElementById('sNameUpd').classList.remove('is-invalid');
             if (errors.length) {
                 errors.forEach((err) => {
                     switch (err.field) {
@@ -85,9 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
             else {
-                document.getElementById('fNameUpd').classList.remove('is-invalid');
-                document.getElementById('pNameUpd').classList.remove('is-invalid');
-                document.getElementById('sNameUpd').classList.remove('is-invalid');
                 document.getElementById('cancel-update-button').click();
                 await updateClientsTable(document.getElementById('search-input').value);
             }
@@ -103,6 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'contacts': []
         }
         const errors = await BackendAPI.create(client);
+        document.getElementById('fName').classList.remove('is-invalid');
+        document.getElementById('pName').classList.remove('is-invalid');
+        document.getElementById('sName').classList.remove('is-invalid');
         if (errors.length) {
             errors.forEach((err) => {
                 switch (err.field) {
@@ -116,9 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         else {
-            document.getElementById('fName').classList.remove('is-invalid');
-            document.getElementById('pName').classList.remove('is-invalid');
-            document.getElementById('sName').classList.remove('is-invalid');
             document.getElementById('fName').value = '';
             document.getElementById('pName').value = '';
             document.getElementById('sName').value = '';
@@ -215,7 +214,6 @@ function drawingTableOfClients(clientsList) {
                     btnChange.setAttribute('data-bs-target', '#updModal');
                     btnChange.append('Изменить');
                     btnChange.addEventListener('click', () => {
-
                         const inputValue = document.querySelectorAll('.change-input');
                         inputValue[0].value = clientsList[i].surname;
                         inputValue[1].value = clientsList[i].name;
@@ -247,7 +245,6 @@ function drawingTableOfClients(clientsList) {
         // добавляем строку в таблицу
         const tableTbody = document.querySelector('.main__table_tbody');
         tableTbody.append(tbodyTr);
-
     }
     // Тултипы над иконками контактов
     setTooltips('.contact-icon', { placement: 'bottom', html: true });
