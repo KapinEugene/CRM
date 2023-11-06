@@ -104,7 +104,7 @@ function drawingTableOfClients(clientsList) {
         const tbodyTr = document.createElement('tr');
 
         // поочередно добавляем все данные клиента
-        for (let key = 0; key < 5; key++) {
+        for (let key = 0; key < 6; key++) {
             const tbodyTd = document.createElement('td');
             switch (key) {
                 case 0:
@@ -162,8 +162,12 @@ function drawingTableOfClients(clientsList) {
                     span2.textContent += date2.getMinutes();
                     tbodyTd.append(span2);
                     break;
-
                 case 4:
+                    tbodyTd.classList.add('td_contacts');
+                    tbodyTd.textContent = '';
+                    break;
+    
+                case 5:
                     tbodyTd.classList.add('td_actions');
                     // ** кнопка изменить
                     const btnChange = document.createElement('button');
@@ -192,6 +196,7 @@ function drawingTableOfClients(clientsList) {
                     });
 
                     tbodyTd.append(btnChange);
+                    tbodyTd.append(' ');
                     tbodyTd.append(btnDelete);
                     break;
                 default:

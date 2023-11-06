@@ -18,7 +18,27 @@ class BackendAPI
         const response = await fetch(uri);
         if (response.ok) {
             const clients = await response.json();
-            return clients;
+            if (Array.isArray(clients)) {
+                // Для каждого элемента массива clients преобразуем дату создания и обновления из строкового представления в timestamp
+                clients.forEach(client => {
+                    const createdAt = Date.parse(client.createdAt);
+                    if (!Number.isNaN(createdAt)) {
+                        client.createdAt = createdAt;
+                    }
+                    else {
+                        client.createdAt = Date.now();
+                    }
+                    const updatedAt = Date.parse(client.updatedAt);
+                    if (!Number.isNaN(updatedAt)) {
+                        client.updatedAt = updatedAt;
+                    }
+                    else {
+                        client.updatedAt = Date.now();
+                    }
+                });
+                return clients;
+            }
+            return [];
         }
         console.error(`Не удалось получить список клиентов`);
         return [];
