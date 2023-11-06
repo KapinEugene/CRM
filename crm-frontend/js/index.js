@@ -6,6 +6,38 @@ async function updateClientsTable(searchTerm = '') {
     drawingTableOfClients(clients);
 }
 
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function getContactIconImg(contactType) {
+    switch (contactType) {
+        case 'Телефон':
+            return 'phone';
+        case 'Email':
+            return 'mail';
+        case 'VK':
+            return 'vk';
+        case 'Facebook':
+            return 'fb';
+        default:
+            return 'human';
+    }
+}
+
+function setTooltips(query, options) {
+    const tooltips = document.querySelectorAll(query);
+
+    for(let i = 0; i < tooltips.length; i++) {
+        let tooltip = new bootstrap.Tooltip(tooltips[i], options);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     updateClientsTable();
 
@@ -164,9 +196,16 @@ function drawingTableOfClients(clientsList) {
                     break;
                 case 4:
                     tbodyTd.classList.add('td_contacts');
-                    tbodyTd.textContent = '';
+                    clientsList[i].contacts.forEach(contact => {
+
+                        const iconImg = document.createElement('img');
+                        iconImg.classList.add('contact-icon');
+                        iconImg.setAttribute('src', `img/contacts/${getContactIconImg(contact.type)}.svg`);
+                        iconImg.setAttribute('alt', 'Icon');
+                        iconImg.setAttribute('title', `<b>${escapeHtml(contact.type)}:</b> ${escapeHtml(contact.value)}`);
+                        tbodyTd.append(iconImg);
+                    });
                     break;
-    
                 case 5:
                     tbodyTd.classList.add('td_actions');
                     // ** кнопка изменить
@@ -210,4 +249,7 @@ function drawingTableOfClients(clientsList) {
         tableTbody.append(tbodyTr);
 
     }
+    // Тултипы над иконками контактов
+    setTooltips('.contact-icon', { placement: 'bottom', html: true });
+//    document.querySelectorAll().entries().map(elem => new bootstrap.Tooltip(elem));
 }
