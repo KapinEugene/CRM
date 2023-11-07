@@ -31,11 +31,25 @@ function getContactIconImg(contactType) {
 }
 
 function setTooltips(query, options) {
-    const tooltips = document.querySelectorAll(query);
-
-    for(let i = 0; i < tooltips.length; i++) {
-        let tooltip = new bootstrap.Tooltip(tooltips[i], options);
+    const elems = document.querySelectorAll(query);
+    for(let i = 0; i < elems.length; i++) {
+        new bootstrap.Tooltip(elems[i], options);
     }
+}
+
+function addContactToList(query, idPrefix, contactType, contact) {
+    if (contact.trim() === '') {
+        alert('Заполните контактные данные!');
+        return;
+    }
+    const tBody = document.querySelector(query);
+    const tRows = document.querySelectorAll(query + ' tr');
+    const newID = idPrefix + (tRows.length + 1);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<tr><td>${escapeHtml(contactType)}</td><td>${escapeHtml(contact)}</td>` +
+        `<td><button type="button" class="btn btn-sm btn-danger" aria-label="Удалить" onclick="document.getElementById('${newID}').remove()">X</button></td></tr>`;
+    tr.setAttribute('id', newID);
+    tBody.append(tr);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -101,10 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
             'lastName': document.getElementById('pName').value,
             'contacts': []
         }
+        const contactsList = document.querySelectorAll('table#contacts-list-create-dialog tbody tr');
+        contactsList.forEach(tr => {
+            client.contacts.push({
+                'type': tr.children[0].textContent,
+                'value': tr.children[1].textContent
+            });
+        });
         const errors = await BackendAPI.create(client);
         document.getElementById('fName').classList.remove('is-invalid');
         document.getElementById('pName').classList.remove('is-invalid');
         document.getElementById('sName').classList.remove('is-invalid');
+        document.getElementById('contacts-list-create-dialog').classList.remove('is-invalid');
         if (errors.length) {
             errors.forEach((err) => {
                 switch (err.field) {
@@ -114,6 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'surname':
                         document.getElementById('sName').classList.add('is-invalid');
                         break;
+                    case 'contacts':
+                        document.getElementById('contacts-list-create-dialog').classList.add('is-invalid');
+                        break;
                 }
             });
         }
@@ -121,6 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('fName').value = '';
             document.getElementById('pName').value = '';
             document.getElementById('sName').value = '';
+            document.querySelector('table#contacts-list-create-dialog tbody').innerHTML = '';
+            document.getElementById('contact-to-add').value = '';
+            document.getElementById('contact-type-to-add').value = 'Email';
             document.getElementById('cancel-create-button').click();
             await updateClientsTable(document.getElementById('search-input').value);
         }
@@ -196,7 +224,6 @@ function drawingTableOfClients(clientsList) {
                 case 4:
                     tbodyTd.classList.add('td_contacts');
                     clientsList[i].contacts.forEach(contact => {
-
                         const iconImg = document.createElement('img');
                         iconImg.classList.add('contact-icon');
                         iconImg.setAttribute('src', `img/contacts/${getContactIconImg(contact.type)}.svg`);
@@ -233,7 +260,7 @@ function drawingTableOfClients(clientsList) {
                     });
 
                     tbodyTd.append(btnChange);
-                    tbodyTd.append(' ');
+                    tbodyTd.append(' ');
                     tbodyTd.append(btnDelete);
                     break;
                 default:
@@ -248,5 +275,4 @@ function drawingTableOfClients(clientsList) {
     }
     // Тултипы над иконками контактов
     setTooltips('.contact-icon', { placement: 'bottom', html: true });
-//    document.querySelectorAll().entries().map(elem => new bootstrap.Tooltip(elem));
 }

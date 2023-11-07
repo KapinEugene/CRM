@@ -38,3 +38,7 @@
 	float: left;
 	margin: 2px 4px;
 }
+
+.td_actions {
+	min-width: 210px;
+}

@@ -54,20 +54,49 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="mb-1">
-                        <label for="sName" class="col-form-label">Фамилия:</label>
-                        <input type="text" class="form-control" id="sName">
+                <div class="mb-1">
+                    <label for="sName" class="col-form-label">Фамилия:</label>
+                    <input type="text" class="form-control" id="sName">
+                </div>
+                <div class="mb-1">
+                    <label for="fName" class="col-form-label">Имя:</label>
+                    <input type="text" class="form-control" id="fName"></input>
+                </div>
+                <div class="mb-1">
+                    <label for="pName" class="col-form-label">Отчество:</label>
+                    <input type="text" class="form-control" id="pName"></input>
+                </div>
+                <hr />
+                <table class="table" id="contacts-list-create-dialog">
+                    <thead>
+                        <tr>
+                        <th>Тип контакта</th>
+                        <th>Контакт</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <select class="form-select" id="contact-type-to-add">
+                                 <option value="Email">Email</option>
+                                 <option value="Телефон">Телефон</option>
+                                 <option value="VK">VK</option>
+                                 <option value="Facebook">Facebook</option>
+                                 <option value="Другое">Другое</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="mb-1">
-                        <label for="fName" class="col-form-label">Имя:</label>
-                        <input type="text" class="form-control" id="fName"></input>
-                    </div>
-                    <div class="mb-1">
-                        <label for="pName" class="col-form-label">Отчество:</label>
-                        <input type="text" class="form-control" id="pName"></input>
-                    </div>
-                </form>
+                   <div class="col-md-5 ps-0">
+                    <input type="text" id="contact-to-add" class="form-control" aria-label="Контакт" value="">
+                   </div>
+                   <div class="col-md-3">
+                    <button id="add-contact-button" type="button" class="btn btn-primary" onclick="addContactToList('table#contacts-list-create-dialog tbody', 'contact-tr-create', document.getElementById('contact-type-to-add').value, document.getElementById('contact-to-add').value); document.getElementById('contact-to-add').value = '';">Добавить</button>
+                   </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button id="cancel-create-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
