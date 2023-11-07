@@ -1,9 +1,11 @@
 const searchDelay = 300;
 
+const clients = new Clients();
+
 async function updateClientsTable(searchTerm = '') {
-    const clients = await BackendAPI.getList(searchTerm);
+    await clients.updateList(searchTerm);
     document.getElementById('clients-table-body').innerHTML = '';
-    drawingTableOfClients(clients);
+    drawingTableOfClients(clients.getList());
 }
 
 function escapeHtml(unsafe) {
@@ -50,6 +52,16 @@ function addContactToList(query, idPrefix, contactType, contact) {
         `<td><button type="button" class="btn btn-sm btn-danger" aria-label="Удалить" onclick="document.getElementById('${newID}').remove()">X</button></td></tr>`;
     tr.setAttribute('id', newID);
     tBody.append(tr);
+}
+
+function sortTable(sortType) {
+	if (clients.sortType === sortType) {
+		clients.sortOrder *= -1;
+	}
+	clients.sortType = sortType;
+   clients.sort();
+   document.getElementById('clients-table-body').innerHTML = '';
+   drawingTableOfClients(clients.getList());
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -156,6 +168,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function drawingTableOfClients(clientsList) {
+
+	document.getElementById('sort-col0').classList.remove(...document.getElementById('sort-col0').classList);
+	document.getElementById('sort-col0').classList.add(...clients.getSortColClasses(0));
+   document.getElementById('sort-col1').classList.remove(...document.getElementById('sort-col1').classList);
+	document.getElementById('sort-col1').classList.add(...clients.getSortColClasses(1));
+   document.getElementById('sort-col2').classList.remove(...document.getElementById('sort-col2').classList);
+	document.getElementById('sort-col2').classList.add(...clients.getSortColClasses(2));
 
     // цикл по всем клиентам
     for (let i = 0; i < clientsList.length; i++) {

@@ -4,23 +4,25 @@
 	background-size: 12px;
 }
 
+.th-sortname-asc {
+	background-image: url('../img/arrow_full_up.svg');
+	padding-right: 32px;
+	background-size: 29px 14px;
+} 
+
 .th-sortable-desc {
 	padding-right: 15px;
 	background: url('../img/arrow_down.svg') right center no-repeat;
 	background-size: 12px;
 }
 
-.th-sorted-asc {
-	padding-right: 15px;
-	background: url('../img/arrow_up.svg') right center no-repeat;
-	background-size: 12px;
-	color: #0d6efd;
+.th-sortname-desc {
+	background-image: url('../img/arrow_full_down.svg');
+	padding-right: 32px;
+	background-size: 29px 14px;
 }
 
-.th-sorted-desc {
-	padding-right: 15px;
-	background: url('../img/arrow_down.svg') right center no-repeat;
-	background-size: 12px;
+.th-sorted {
 	color: #0d6efd;
 }
 

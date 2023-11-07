@@ -1,4 +1,4 @@
-const apiURI = 'http://localhost:5500/api/clients';
+const apiURI = 'http://localhost:3000/api/clients';
 
 class BackendAPI
 {
