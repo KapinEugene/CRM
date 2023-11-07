@@ -136,13 +136,99 @@ const app = {
 			const newClient = {
 				'name': this.names[gender][this.getRandomInt(this.names[gender].length - 1)],
 				'lastName': this.patronymics[gender][this.getRandomInt(this.patronymics[gender].length - 1)],
-				'surname': this.lastNames[gender][this.getRandomInt(this.lastNames[gender].length - 1)],
-				'contacts': []
+				'surname': this.lastNames[gender][this.getRandomInt(this.lastNames[gender].length - 1)]
 			}
+			newClient.contacts = this.shuffleArray([...this.genPhones(), ...this.genEmails(), ...this.genVK(), ...this.genFB(), ...this.genOther()]);
 			console.log(`${newClient.name} ${newClient.lastName} ${newClient.surname}`);
 			clientModel.create(newClient);
 			await this.delay();
 		}
+	},
+
+	genPhones() {
+		const phonesCount = this.getRandomInt(3) - 1;
+		const result = [];
+		if (phonesCount > 0) {
+			for (let i = 1; i <= phonesCount; i++) {
+				result.push({
+					type: 'Телефон',
+					value: '+7' + this.getRandomString(10, '0123456789')
+				});
+			}
+		}
+		return result;
+	},
+
+	genEmails() {
+		const emailsCount = this.getRandomInt(1);
+		const result = [];
+		if (emailsCount > 0) {
+			for (let i = 1; i <= emailsCount; i++) {
+				result.push({
+					type: 'Email',
+					value: this.getRandomString(5 + this.getRandomInt(6), 'qwertyuiopasdfghjklzxcvbnm0123456789') + '@' + ['mail.ru', 'yandex.ru', 'gmail.com'][this.getRandomInt(2)]
+				});
+			}
+		}
+		return result;
+	},
+
+	genVK() {
+		if (this.getRandomInt(2) < 1) {
+			return [
+				{
+					type: 'VK',
+					value: 'https://vk.com/' + this.getRandomString(3 + this.getRandomInt(6), 'qwertyuiopasdfghjklzxcvbnm0123456789')
+				}
+			];
+		}
+		return [];
+	},
+
+	genFB() {
+		if (this.getRandomInt(5) < 1) {
+			return [
+				{
+					type: 'Facebook',
+					value: 'https://facebook.com/' + this.getRandomString(3 + this.getRandomInt(6), 'qwertyuiopasdfghjklzxcvbnm0123456789')
+				}
+			];
+		}
+		return [];
+	},
+
+	genOther() {
+		if (this.getRandomInt(6) < 1) {
+			return [
+				{
+					type: 'Другое',
+					value: this.getRandomString(12 + this.getRandomInt(12), 'йцукенгшщзхъфывапролджэячсмитьбюё ')
+				}
+			];
+		}
+		return [];
+	},
+
+	getRandomString(length, symbols) {
+		let result = '';
+		let i = 0;
+		const symLen = symbols.length;
+		while (i < length) {
+			result += symbols.charAt(this.getRandomInt(symLen));
+			i++;
+		}
+		return result;
+	},
+
+	shuffleArray(array) {
+		if (array.length < 2) {
+			return array;
+		}
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = this.getRandomInt(i);
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+		return array;
 	},
 
 	getRandomInt(maxValue) {

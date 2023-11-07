@@ -49,7 +49,7 @@ module.exports = class ClientJSONModel {
 	}
 
 	// Метод пытается обновить данные клиента с указанным ID
-	// Возвращает true, если клиент с таким ID существовует и его данные были обновлёны, false в противном случае
+	// Возвращает true, если клиент с таким ID существует и его данные были обновлёны, false в противном случае
 	update(clientID, clientCard) {
 		const clients = this.getClients();
 		const clientIndex = clients.findIndex((client) => client.id === clientID);
