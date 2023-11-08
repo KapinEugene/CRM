@@ -44,3 +44,15 @@
 .td_actions {
 	min-width: 210px;
 }
+
+.contacts {
+	border: 0px;
+	border-radius: 5px;
+	padding: 4px;
+}
+
+.contacts-invalid {
+	border: 1px solid #dc3545;
+	border-radius: 5px;
+	padding: 3px;
+}

@@ -1,167 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>CRM</title>
-    <script src="./assets/js/color-modes.js"></script>
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./css/styles.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>CRM</title>
+	<script src="./assets/js/color-modes.js"></script>
+	<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./css/styles.css" rel="stylesheet">
 </head>
+
 <body>
-<div class="header">
-    <nav class="navbar navbar-expand-md fixed-top bg-white sticky-top shadow-sm rounded">
-        <div class="container-fluid">
-            <span class="navbar-brand" href="#">Служба информационных технологий</span>
-            <div class="navbar-collapse" id="navbarCollapse">
-                <input id="search-input" class="form-control me-2" style="width: 600px;" type="search" placeholder="Поиск клиента..." aria-label="Search">
-            </div>
-        </div>
-    </nav>
-</div>
-<div class="page-content">
-    <div class="container">
-        <div class="row">
-            <div class="d-flex justify-content-center" style="padding: 1rem 0;">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить клиента</button>
-            </div>
-        </div>
+	<div class="header">
+		<nav class="navbar navbar-expand-md fixed-top bg-white sticky-top shadow-sm rounded">
+			<div class="container-fluid">
+				<span class="navbar-brand" href="#">Служба информационных технологий</span>
+				<div class="navbar-collapse" id="navbarCollapse">
+					<input id="search-input" class="form-control me-2" style="width: 600px;" type="search"
+						placeholder="Поиск клиента..." aria-label="Search">
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div class="page-content">
+		<div class="container">
+			<div class="row">
+				<div class="d-flex justify-content-center" style="padding: 1rem 0;">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Добавить
+						клиента</button>
+				</div>
+			</div>
 
-        <div class="row">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">id</th>
-                    <th scope="col"><span id="sort-col0" onclick="sortTable(0);">Фамилия Имя Отчество</span></th>
-                    <th scope="col"><span id="sort-col1" onclick="sortTable(1);">Дата и время создания</span></th>
-                    <th scope="col"><span id="sort-col2" onclick="sortTable(2);">Последние изменения</span></th>
-                    <th scope="col">Контакты</th>
-                    <th scope="col">Действия</th>
-                </tr>
-                </thead>
-                <tbody id="clients-table-body" class="main__table_tbody">
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+			<div class="row">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">id</th>
+							<th scope="col"><span id="sort-col0" onclick="sortTable(0);">Фамилия Имя Отчество</span></th>
+							<th scope="col"><span id="sort-col1" onclick="sortTable(1);">Дата и время создания</span></th>
+							<th scope="col"><span id="sort-col2" onclick="sortTable(2);">Последние изменения</span></th>
+							<th scope="col">Контакты</th>
+							<th scope="col">Действия</th>
+						</tr>
+					</thead>
+					<tbody id="clients-table-body" class="main__table_tbody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 
-<div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Новый клиент</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-1">
-                    <label for="sName" class="col-form-label">Фамилия:</label>
-                    <input type="text" class="form-control" id="sName">
-                </div>
-                <div class="mb-1">
-                    <label for="fName" class="col-form-label">Имя:</label>
-                    <input type="text" class="form-control" id="fName"></input>
-                </div>
-                <div class="mb-1">
-                    <label for="pName" class="col-form-label">Отчество:</label>
-                    <input type="text" class="form-control" id="pName"></input>
-                </div>
-                <hr />
-                <table class="table" id="contacts-list-create-dialog">
-                    <thead>
-                        <tr>
-                        <th>Тип контакта</th>
-                        <th>Контакт</th>
-                        <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            <select class="form-select" id="contact-type-to-add">
-                                 <option value="Email">Email</option>
-                                 <option value="Телефон">Телефон</option>
-                                 <option value="VK">VK</option>
-                                 <option value="Facebook">Facebook</option>
-                                 <option value="Другое">Другое</option>
-                            </select>
-                        </div>
-                    </div>
-                   <div class="col-md-5 ps-0">
-                    <input type="text" id="contact-to-add" class="form-control" aria-label="Контакт" value="">
-                   </div>
-                   <div class="col-md-3">
-                    <button id="add-contact-button" type="button" class="btn btn-primary" onclick="addContactToList('table#contacts-list-create-dialog tbody', 'contact-tr-create', document.getElementById('contact-type-to-add').value, document.getElementById('contact-to-add').value); document.getElementById('contact-to-add').value = '';">Добавить</button>
-                   </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="cancel-create-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button id="confirm-create-button" type="button" class="btn btn-primary">Создать</button>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Новый клиент</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-1">
+						<label for="sName" class="col-form-label">Фамилия:</label>
+						<input type="text" class="form-control" id="sName">
+					</div>
+					<div class="mb-1">
+						<label for="fName" class="col-form-label">Имя:</label>
+						<input type="text" class="form-control" id="fName"></input>
+					</div>
+					<div class="mb-1">
+						<label for="pName" class="col-form-label">Отчество:</label>
+						<input type="text" class="form-control" id="pName"></input>
+					</div>
+					<hr />
+					<div class="mb-3 contacts" id="div-contact-tr-create">
+						<table class="table" id="contacts-list-create-dialog">
+							<thead>
+								<tr>
+									<th>Тип контакта</th>
+									<th>Контакт</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="input-group mb-3">
+								<select class="form-select" id="contact-tr-create-contact-type-to-add">
+									<option value="Email">Email</option>
+									<option value="Телефон">Телефон</option>
+									<option value="VK">VK</option>
+									<option value="Facebook">Facebook</option>
+									<option value="Другое">Другое</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-5 ps-0">
+							<input type="text" id="contact-tr-create-contact-to-add" class="form-control" aria-label="Контакт" value="">
+						</div>
+						<div class="col-md-3">
+							<button id="add-contact-button" type="button" class="btn btn-primary"
+								onclick="addContactToList('table#contacts-list-create-dialog tbody', 'contact-tr-create');">Добавить</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="cancel-create-button" type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Закрыть</button>
+					<button id="confirm-create-button" type="button" class="btn btn-primary">Создать</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<div class="modal fade" id="updModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Изменить данные клиента</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-1">
-                        <label for="sNameUpd" class="col-form-label">Фамилия:</label>
-                        <input type="text" class="change-input form-control" id="sNameUpd">
-                    </div>
-                    <div class="mb-1">
-                        <label for="fNameUpd" class="col-form-label">Имя:</label>
-                        <input type="text" class="change-input form-control" id="fNameUpd">
-                    </div>
-                    <div class="mb-1">
-                        <label for="pNameUpd" class="col-form-label">Отчество:</label>
-                        <input type="text" class="change-input form-control" id="pNameUpd">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" id="client-id-to-update" value="" />
-                <button id="cancel-update-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button id="confirm-update-button" type="button" class="btn btn-primary">Сохранить</button>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="modal fade" id="updModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5">Изменить данные клиента</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-1">
+						<label for="sNameUpd" class="col-form-label">Фамилия:</label>
+						<input type="text" class="change-input form-control" id="sNameUpd">
+					</div>
+					<div class="mb-1">
+						<label for="fNameUpd" class="col-form-label">Имя:</label>
+						<input type="text" class="change-input form-control" id="fNameUpd">
+					</div>
+					<div class="mb-1">
+						<label for="pNameUpd" class="col-form-label">Отчество:</label>
+						<input type="text" class="change-input form-control" id="pNameUpd">
+					</div>
+					<hr />
+					<div class="mb-3 contacts" id="div-contact-tr-update">
+						<table class="table" id="contacts-list-update-dialog">
+							<thead>
+								<tr>
+									<th>Тип контакта</th>
+									<th>Контакт</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="input-group mb-3">
+								<select class="form-select" id="contact-tr-update-contact-type-to-add">
+									<option value="Email">Email</option>
+									<option value="Телефон">Телефон</option>
+									<option value="VK">VK</option>
+									<option value="Facebook">Facebook</option>
+									<option value="Другое">Другое</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-5 ps-0">
+							<input type="text" id="contact-tr-update-contact-to-add" class="form-control" aria-label="Контакт" value="">
+						</div>
+						<div class="col-md-3">
+							<button id="upd-add-contact-button" type="button" class="btn btn-primary"
+								onclick="addContactToList('table#contacts-list-update-dialog tbody', 'contact-tr-update');">Добавить</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" id="client-id-to-update" value="" />
+					<button id="cancel-update-button" type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Закрыть</button>
+					<button id="confirm-update-button" type="button" class="btn btn-primary">Сохранить</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<div class="modal fade" id="delModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Удалить клиента?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <h3 class="modal-title fs-5">Вы действительно хотите удалить данного клиента?</h3>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" id="client-id-to-delete" value="" />
-                <button id="cancel-delete-button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
-                <button id="confirm-delete-button" type="button" class="btn btn-danger">Удалить</button>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="modal fade" id="delModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5">Удалить клиента?</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<h3 class="modal-title fs-5">Вы действительно хотите удалить данного клиента?</h3>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" id="client-id-to-delete" value="" />
+					<button id="cancel-delete-button" type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Отменить</button>
+					<button id="confirm-delete-button" type="button" class="btn btn-danger">Удалить</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-<!--<script type="text/javascript" src="./js/data.js"></script>-->
-<script src="js/backendAPI.js"></script>
-<script src="js/Clients.js"></script>
-<script src="js/index.js"></script>
+	<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+	<!--<script type="text/javascript" src="./js/data.js"></script>-->
+	<script src="js/backendAPI.js"></script>
+	<script src="js/Clients.js"></script>
+	<script src="js/index.js"></script>
 </body>
+
 </html>
