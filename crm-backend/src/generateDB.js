@@ -140,6 +140,9 @@ const app = {
 			}
 			newClient.contacts = this.shuffleArray([...this.genPhones(), ...this.genEmails(), ...this.genVK(), ...this.genFB(), ...this.genOther()]);
 			console.log(`${newClient.name} ${newClient.lastName} ${newClient.surname}`);
+			newClient.contacts.forEach((contact) => {
+				console.log(`	${contact.type}: ${contact.value}`);
+			});
 			clientModel.create(newClient);
 			await this.delay();
 		}
@@ -152,7 +155,7 @@ const app = {
 			for (let i = 1; i <= phonesCount; i++) {
 				result.push({
 					type: 'Телефон',
-					value: '+7' + this.getRandomString(10, '0123456789')
+					value: `+7 9${this.getRandomString(9, '0123456789')}`
 				});
 			}
 		}
@@ -214,7 +217,7 @@ const app = {
 		let i = 0;
 		const symLen = symbols.length;
 		while (i < length) {
-			result += symbols.charAt(this.getRandomInt(symLen));
+			result += symbols.charAt(this.getRandomInt(symLen - 1));
 			i++;
 		}
 		return result;
