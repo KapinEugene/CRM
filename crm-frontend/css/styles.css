@@ -1,23 +1,23 @@
 .th-sortable-asc {
-	padding-right: 15px;
 	background: url('../img/arrow_up.svg') right center no-repeat;
+	padding-right: 15px;
 	background-size: 12px;
 }
 
 .th-sortname-asc {
-	background-image: url('../img/arrow_full_up.svg');
+	background: url('../img/arrow_full_up.svg') right center no-repeat;
 	padding-right: 32px;
 	background-size: 29px 14px;
-} 
+}
 
 .th-sortable-desc {
-	padding-right: 15px;
 	background: url('../img/arrow_down.svg') right center no-repeat;
+	padding-right: 15px;
 	background-size: 12px;
 }
 
 .th-sortname-desc {
-	background-image: url('../img/arrow_full_down.svg');
+	background: url('../img/arrow_full_down.svg') right center no-repeat;
 	padding-right: 32px;
 	background-size: 29px 14px;
 }
@@ -28,6 +28,8 @@
 
 .th-sortable-asc:hover,
 .th-sortable-desc:hover,
+.th-sortname-asc:hover,
+.th-sortname-desc:hover,
 .th-sorted-asc:hover,
 .th-sorted-desc:hover {
 	color: #0b5ed7;
