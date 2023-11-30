@@ -1,4 +1,4 @@
-PATCH http://localhost:3000/api/clients/1698993611427
+GET http://localhost:8080/api/user
 
   {
     "name": "",

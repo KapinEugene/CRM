@@ -1,4 +1,4 @@
-const apiURI = 'http://localhost:3000/api/clients';
+const apiURI = 'http://localhost:8080/api/user';
 
 class BackendAPI {
 	static async getByID(id) {
@@ -17,6 +17,7 @@ class BackendAPI {
 		const response = await fetch(uri);
 		if (response.ok) {
 			const clients = await response.json();
+			console.log(clients);
 			if (Array.isArray(clients)) {
 				// Для каждого элемента массива clients преобразуем дату создания и обновления из строкового представления в timestamp
 				clients.forEach(client => {
@@ -34,6 +35,7 @@ class BackendAPI {
 					else {
 						client.updatedAt = Date.now();
 					}
+					client.id = new String(client.id);
 				});
 				return clients;
 			}
